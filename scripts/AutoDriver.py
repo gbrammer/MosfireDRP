@@ -31,7 +31,7 @@ class Driver(object):
 
     def import_section(self):
         self.addLine("import matplotlib")
-        self.addLine("matplotlib.use('TkAgg') # Force TkAgg backend for interactivity. This is")
+        self.addLine("# matplotlib.use('TkAgg') # Force TkAgg backend for interactivity. This is")
         self.addLine("                        # critical to bypass a bug in the MacOSX backend.")
         self.addLine("import os")
         self.addLine("import time")
@@ -66,7 +66,7 @@ class Driver(object):
 
     def printnoninteractive(self,noninteractive=False):
         self.addLine("#Set noninteractive to True to autofit wavelenth solution instead of manually fitting.")
-        self.addLine("noninteractiveflag="+str(noninteractive))
+        self.addLine("noninteractiveflag=True") #+str(noninteractive))
 
     def printMaskAndBand(self):
         offsetfile = self.offsetFiles[0]
