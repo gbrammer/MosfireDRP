@@ -586,7 +586,7 @@ def extract_spectra(maskname, band, interactive=True, width=10,
 
     if target == 'default':
         ## Get objectnames from slit edges
-        edges = np.load('slit-edges_{}.npy'.format(band))
+        edges = np.load('slit-edges_{}.npy'.format(band), allow_pickle=True)
         objectnames = [edge['Target_Name'] for edge in edges[:-1]]
         eps_files = ['{}_{}_{}_eps.fits'.format(maskname, band, objectname)
                      for objectname in objectnames]

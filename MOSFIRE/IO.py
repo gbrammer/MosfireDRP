@@ -56,7 +56,7 @@ def load_edges(maskname, band, options):
 
     fn = "slit-edges_{0}.npy".format(band)
     try:
-        edges = np.load(fn)
+        edges = np.load(fn, allow_pickle=True)
     except:
         error("Cannot load slit edges file")
         raise Exception("Cannot load slit edges file")
@@ -76,7 +76,7 @@ def load_lambdacenter(fnum, maskname, options):
         fn = os.path.join(path, "lambda_center_coeffs_{0}.npy".format(fnum))
 
     fn = "lambda_center_coeffs_{0}.npy".format(fnum)
-    ld = np.load(fn)
+    ld = np.load(fn, allow_pickle=True)
 
     return ld
 
@@ -89,7 +89,7 @@ def load_lambdadata(wavename, maskname, band, options):
 
 
     fn = "lambda_coeffs_{0}.npy".format(wavename)
-    ld = np.load(fn)
+    ld = np.load(fn, allow_pickle=True)
 
     return ld
 
@@ -101,7 +101,7 @@ def load_lambdaoutwards(fnum, maskname, band, options):
 
     fn = "lambda_outwards_coeffs{0}.npy".format(fnum)
 
-    ld = np.load(fn)
+    ld = np.load(fn, allow_pickle=True)
 
     return ld
 
@@ -113,7 +113,7 @@ def load_lambdamodel(fnum, maskname, band, options):
 
     fn = "lambda_mask_coeffs_{0}.npy".format(fnum)
 
-    ld = np.load(fn)
+    ld = np.load(fn, allow_pickle=True)
     return ld
 
 
@@ -654,8 +654,7 @@ def imcombine(filelist, out, options, method="average", reject="none",\
             nlow = 0
             nhigh = 0
         
-        if ccdproc.version.major >= 1 and ccdproc.version.minor >= 1\
-           and ccdproc.version.release:
+        if ccdproc.__version__ > '1.1':
             info('Combining files using ccdproc.combine task')
             info('  reject=clip_extrema')
             info('  nlow={}'.format(nlow))

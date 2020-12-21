@@ -424,7 +424,7 @@ def apply_interactive(maskname, band, options, apply=None, to=None, neon=False,
     wavenames = IO.list_file_to_strings(apply)
     wavename = filelist_to_path(wavenames, band, maskname, options)
     fn = "lambda_center_coeffs_{0}.npy".format(wavename.rstrip(".fits"))
-    waves = np.load(fn)
+    waves = np.load(fn, allow_pickle=True)
 
     # Load the arc lamp
     to_files = IO.list_file_to_strings(to)
@@ -492,13 +492,13 @@ def check_wavelength_roi(maskname, band, skyfiles, arcfiles, LROI, options, no_c
     skyfiles = IO.list_file_to_strings(skyfiles)
     skyfilename = filelist_to_path(skyfiles, band, maskname, options)
     fn = "lambda_center_coeffs_{0}.npy".format(skyfilename.rstrip(".fits"))
-    skysols = np.load(fn)
+    skysols = np.load(fn, allow_pickle=True)
 
     # Load the arc wavelength solution data
     arcfiles = IO.list_file_to_strings(arcfiles)
     arcfilename = filelist_to_path(arcfiles, band, maskname, options)
     fn = "lambda_center_coeffs_{0}.npy".format(arcfilename.rstrip(".fits"))
-    arcsols = np.load(fn)
+    arcsols = np.load(fn, allow_pickle=True)
 
     if len(skysols) != len(arcsols): 
         error("Number of slits in sky (%i) and arcs (%i) is different" % ( len(skysols) , len(arcsols)))
@@ -597,7 +597,7 @@ def fit_lambda_interactively(maskname, band, wavenames, options, neon=None,
     linelist = pick_linelist(header, neon=neon, argon=argon, short_exp = short_exp)
     
     try: 
-        solutions = np.load(fn)
+        solutions = np.load(fn, allow_pickle=True)
         info( "Solutions loaded from: "+str(fn))
     except IOError: solutions = None
 
@@ -2579,9 +2579,9 @@ def plot_data_quality(maskname, fname, options):
     fname = fname.rstrip(".fits")
     path = './'
     solname = os.path.join(path, "lambda_coeffs_%s.npy" % fname)
-    solutions = np.load(solname)
+    solutions = np.load(solname, allow_pickle=True)
     solname = os.path.join(path, "mask_solution_%s.npy" % fname)
-    masksol = np.load(solname)[0]
+    masksol = np.load(solname, allow_pickle=True)[0]
 
 
     outname = os.path.join(path, "wavelength_fits_%s.pdf" % fname)
@@ -2719,7 +2719,7 @@ if __name__ == "__main__":
     np.set_printoptions(precision=3)
 
 
-    cc = np.load("lambda_coeffs_m120507_0230.npy")
+    cc = np.load("lambda_coeffs_m120507_0230.npy", allow_pickle=True)
 
 
     px = []
